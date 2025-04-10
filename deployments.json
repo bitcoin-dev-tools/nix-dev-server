@@ -1,0 +1,11 @@
+[
+  {
+    "username": "will",
+    "hostname": "ax52",
+    "ipAddress": "localhost",
+    "isAdmin": true,
+    "sshKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGJJ1JCS4qoO7/N9vdV6W+fSxUqq1h5f1wMOdk/M/8mY will@256k1.dev",
+    "timeZone": "Europe/London",
+    "locale": "en_GB.UTF-8"
+  }
+]
