@@ -84,6 +84,7 @@
                   ++ (if deployment.isAdmin then [ "wheel" ] else [ ]);
                 openssh.authorizedKeys.keys = [ deployment.sshKey ];
               };
+              environment.systemPackages = [ pkgs.home-manager ];
             }
 
           ];
