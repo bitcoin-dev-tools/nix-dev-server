@@ -40,7 +40,6 @@ set dotenv-load := true
 set quiet
 set shell := ["bash", "-euc"]
 set unstable := true # Needed for `&&` in ramdisk-params
-set working-directory := "bitcoin"
 
 os := os()
 log-dir := "/tmp/bitcoin-core"
