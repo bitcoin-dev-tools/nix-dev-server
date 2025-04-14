@@ -4,11 +4,6 @@ set shell := ["bash", "-uc"]
 default:
     just --list
 
-# Get IP address for a username from deployments.json
-[private]
-get-ip-address user:
-    @jq -r '.[] | select(.username == "{{user}}") | .ipAddress' deployments.json
-
 # Build configuration without deploying
 [group('test')]
 build user:
@@ -26,10 +21,10 @@ dry-run user:
 
 # Deploy a new configuration to a remote machine
 [group('live')]
-deploy user:
-    nix-shell -p nixos-anywhere --run "nixos-anywhere --flake .#{{user}} `just get-ip-address {{user}}`"
+deploy user hostname:
+    nix-shell -p nixos-anywhere --run "nixos-anywhere --flake .#{{user}} {{hostname}}"
 
 # Update a configuration on a remote machine
 [group('live')]
-switch user:
-    nix-shell -p nixos-rebuild --run "nixos-rebuild switch --flake .#{{user}} --target-host `just get-ip-address {{user}}` --impure"
+switch user hostname:
+    nix-shell -p nixos-rebuild --run "nixos-rebuild switch --flake .#{{user}} --target-host {{hostname}} --impure"
