@@ -1,11 +1,9 @@
-{ lib, modulesPath, ... }: {
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-  ];
-
+# Example to create a bios compatible gpt partition
+{ lib, ... }:
+{
   disko.devices = {
     disk.disk1 = {
-      device = lib.mkDefault "/dev/nvme1n1";
+      device = lib.mkDefault "/dev/sda";
       type = "disk";
       content = {
         type = "gpt";
@@ -36,25 +34,6 @@
         };
       };
     };
-    disk.disk2 = {
-      device = lib.mkDefault "/dev/nvme0n1";
-      type = "disk";
-      content = {
-        type = "gpt";
-        partitions = {
-          data = {
-            name = "data";
-            size = "100%";
-            content = {
-              type = "filesystem";
-              format = "ext4";
-              mountpoint = "/data";
-              mountOptions = [ "defaults" ];
-            };
-          };
-        };
-      };
-    };
     lvm_vg = {
       pool = {
         type = "lvm_vg";
@@ -65,7 +44,9 @@
               type = "filesystem";
               format = "ext4";
               mountpoint = "/";
-              mountOptions = [ "defaults" ];
+              mountOptions = [
+                "defaults"
+              ];
             };
           };
         };
