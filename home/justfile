@@ -5,8 +5,9 @@ default:
 # Setup a bitcoin core source directory
 setup source-dir:
     if [ ! -d "{{source-dir}}" ]; then echo "Error: Bitcoin Core source directory {{source-dir}} does not exist" exit 1; fi
-    cp ./env/.envrc bitcoin/shell.nix {{source-dir}}
+    cp ./env/.envrc bitcoin/shell.nix bitcoin/justfile {{source-dir}}
     echo ".envrc"  >> {{source-dir}}/.gitignore
     echo "flake.nix"  >> {{source-dir}}/.gitignore
+    echo "justfile"  >> {{source-dir}}/.gitignore
     cd {{source-dir}} && direnv allow
 
