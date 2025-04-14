@@ -1,10 +1,10 @@
 [
   {
     "username": "will",
-    "hostname": "ax52-4tb",
+    "hostname": "ax102",
     "ipAddress": "localhost",
     "isAdmin": true,
-    "sshKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGJJ1JCS4qoO7/N9vdV6W+fSxUqq1h5f1wMOdk/M/8mY will@256k1.dev",
+    "sshKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH988C5DbEPHfoCphoW23MWq9M6fmA4UTXREiZU0J7n0 will.hetzner@temp.com",
     "timeZone": "Europe/London",
     "locale": "en_GB.UTF-8"
   }
