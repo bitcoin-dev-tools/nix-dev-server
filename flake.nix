@@ -65,13 +65,20 @@
             # Include Home Manager module
             home-manager.nixosModules.home-manager
             {
-              home-manager.useGlobalPkgs = true; # Use system Nixpkgs
-              home-manager.useUserPackages = true; # Install user packages to /etc/profiles
-              home-manager.users.${userName} = {
-                # Default Home Manager configuration for the user
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.${userName} = { pkgs, ... }: {
                 home.stateVersion = "25.05";
                 # Allow users to manage their own packages
-                home.packages = [ ]; # Can be overridden in ~/.config/home-manager/home.nix
+                home.packages = [ ]; # Base packages (can be extended locally)
+                # Import local user configuration if it exists
+                imports =
+                  let
+                    localConfig = "/home/${userName}/.config/home-manager/home.local.nix";
+                  in
+                  if builtins.pathExists localConfig
+                  then [ localConfig ]
+                  else [ ];
               };
             }
 

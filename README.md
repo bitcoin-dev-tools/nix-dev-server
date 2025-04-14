@@ -35,7 +35,7 @@ To use one in an ephemeral environment run `nix-shell -p <package-name>`.
 #### Persistently
 
 Sometimes you may want packages installed persistently.
-For this, we leverage home-manager which means you can add packages to `~/.config/home-manager/home.nix` and run:
+For this, we leverage home-manager which means you can add packages to `~/.config/home-manager/home.local.nix` and run:
 
 ```bash
 home-manager switch
