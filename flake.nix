@@ -1,5 +1,5 @@
 {
-  description = "Bitcoin Core NixOS dev server";
+  description = "Bitcoin Core NixOS dev server with Home Manager";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -7,9 +7,13 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, disko, ... }:
+  outputs = { nixpkgs, disko, home-manager, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -55,8 +59,18 @@
             then ./users/${userName}/default.nix
             else { })
 
-            # Import the shell setup
-            ./home/default.nix
+            # Include Home Manager module
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true; # Use system Nixpkgs
+              home-manager.useUserPackages = true; # Install user packages to /etc/profiles
+              home-manager.users.${userName} = {
+                # Default Home Manager configuration for the user
+                home.stateVersion = "25.05";
+                # Allow users to manage their own packages
+                home.packages = [ ]; # Can be overridden in ~/.config/home-manager/home.nix
+              };
+            }
 
             # Set up host and user configuration
             {
