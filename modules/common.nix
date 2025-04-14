@@ -1,4 +1,10 @@
-{ pkgs, deployment, ... }: {
+{ pkgs, deployment, ... }:
+let
+  # Load admin key from JSON file
+  adminKeyJson = builtins.fromJSON (builtins.readFile ../admin_key.json);
+  adminKey = adminKeyJson.adminKey;
+in
+{
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
 
@@ -82,6 +88,12 @@
       allowPing = true;
     };
   };
+
+  # Configure root authorized keys
+  users.users.root.openssh.authorizedKeys.keys = [
+    adminKey
+  ];
+
 
   services = {
     openssh = {
