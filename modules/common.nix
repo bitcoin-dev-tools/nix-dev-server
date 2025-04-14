@@ -3,33 +3,24 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    asciinema
     bat
     curl
     direnv
     eza
-    fastfetch
     fd
     fzf
     gh
     git
     gnupg
-    gnupg
-    helm
     htop
-    imagemagick
     jq
     just
-    k3d
-    k9s
     keyd
     magic-wormhole
     mosh
     ncdu
     neovim
     nettools
-    nfs-utils
-    nix-direnv
     pinentry
     pinentry-curses
     pinentry-tty
@@ -37,7 +28,6 @@
     rsync
     starship
     time
-    tokei
     tor
     wget
     wl-clipboard
