@@ -55,6 +55,9 @@
             then ./users/${userName}/default.nix
             else { })
 
+            # Import the shell setup
+            ./home/default.nix
+
             # Set up host and user configuration
             {
               networking.hostName = hostName;

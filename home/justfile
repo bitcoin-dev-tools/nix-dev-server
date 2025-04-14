@@ -1,0 +1,13 @@
+[private]
+default:
+    just --list
+
+# Setup a bitcoin core source directory
+setup source-dir:
+    echo ".envrc"  >> {{source-dir}}/.gitignore
+    echo "flake.nix"  >> {{source-dir}}/.gitignore
+    cp .envrc bitcoin/flake.nix {{source-dir}}
+    pushd {{source-dir}}
+    direnv allow
+    popd
+
