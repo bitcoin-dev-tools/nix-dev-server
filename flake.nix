@@ -59,6 +59,9 @@
             then ./users/${userName}/default.nix
             else { })
 
+            # Add Bitcoin Core helper setup scripts
+            ./home/default.nix
+
             # Include Home Manager module
             home-manager.nixosModules.home-manager
             {
