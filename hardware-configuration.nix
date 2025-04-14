@@ -3,18 +3,17 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot";
+
   disko.devices = {
     disk.disk1 = {
-      device = lib.mkDefault "/dev/nvme1n1";
+      device = lib.mkDefault "/dev/nvme0n1";
       type = "disk";
       content = {
         type = "gpt";
         partitions = {
-          boot = {
-            name = "boot";
-            size = "1M";
-            type = "EF02";
-          };
           esp = {
             name = "ESP";
             size = "500M";
@@ -23,6 +22,7 @@
               type = "filesystem";
               format = "vfat";
               mountpoint = "/boot";
+              mountOptions = [ "defaults" "umask=0077" ];
             };
           };
           root = {
@@ -37,7 +37,7 @@
       };
     };
     disk.disk2 = {
-      device = lib.mkDefault "/dev/nvme0n1";
+      device = lib.mkDefault "/dev/nvme1n1";
       type = "disk";
       content = {
         type = "gpt";

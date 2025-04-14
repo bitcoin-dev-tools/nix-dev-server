@@ -1,48 +1,39 @@
-# NixOS Dev Server Configuration
+# Bitcoin Core NixOS Dev configuration
 
-- A NixOS configuration for bitcoin development servers.
-- Generic over users and hosts.
+## Files
 
-## Nix-dev-server users
+- `configuration.nix` - Main system configuration
+- `hardware-configuration.nix` - Hardware-specific configuration
+- `home-manager.nix` - Home Manager configuration
+- `flake.nix` - Flake configuration
 
-Bitcoin Core requires various build inputs which are best handled by a dedicated nix environment.
-This is usually a shell.nix or a nix flake.
+## Usage
 
-To aid this setup, a justfile script is provided in `/home/$USER/setup` which will amend the bitcoin core source directory to provide this automatically.
+To use this configuration:
 
-Configure this by doing the following:
+1. Modify the following lines in `configuration.nix` to your own values:
 
-```bash
-mkdir $HOME/src
-git clone https://github.com/bitcoin/bitcoin /home/$USER/src/
-
-cd $HOME/setup
-just setup /home/$USER/src/bitcoin
+```nix
+username = "will";
+sshKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH988C5DbEPHfoCphoW23MWq9M6fmA4UTXREiZU0J7n0 will.hetzner@temp.com";
 ```
 
-The `direnv` tool will, after one-time setup, activate the required shell automatically whenever entering this directory (or children).
-
-### Adding packages
-
-Nix packages can be found by searching https://search.nixos.org/packages
-
-Generally it's considered best-practice to install packages needed for developement using a shell.nix or a flake, but "general" packages can be installed as below.
-
-#### Ephemerally
-
-To use one in an ephemeral environment run `nix-shell -p <package-name>`.
-
-#### Persistently
-
-Sometimes you may want packages installed persistently.
-For this, we leverage home-manager which means you can add packages to `~/.config/home-manager/home.local.nix` and run:
+2. For an initial deployment to a fresh machine:
 
 ```bash
-home-manager switch
+nix-shell -p nixos-anywhere --run "nixos-anywhere --flake .#default <hostname>"
 ```
 
-to install the new packages for your user.
+3. To "switch" to a new version (i.e. after making changes to this configuration):
 
-## Nix-dev-server administrators
+```bash
+nix-shell -p nixos-rebuild --run "nixos-rebuild switch --flake .#default --target-host <hostname>"
+```
 
-See the [Admin README](README-admin.md)
+## Customization
+
+To customize the configuration:
+
+- Edit `configuration.nix` to modify system-wide settings
+- Edit `home-manager.nix` to modify user-specific settings
+- Create a local override file at `/home/will/.config/home-manager/home.local.nix` for user-specific customizations
