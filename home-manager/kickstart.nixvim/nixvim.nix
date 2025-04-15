@@ -1,6 +1,5 @@
 { pkgs, ... }: {
   imports = [
-    # Plugins
     ./plugins/conform.nix
     ./plugins/gitsigns.nix
     ./plugins/indent-blankline.nix

@@ -9,7 +9,6 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
     ./disk-config.nix
-    ./home-manager/kickstart.nixvim/nixvim.nix
     ./setup
   ];
   boot.loader.grub = {
