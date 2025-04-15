@@ -1,15 +1,15 @@
-{
-  modulesPath,
-  pkgs,
-  sshKey,
-  username,
-  ...
+{ modulesPath
+, pkgs
+, sshKey
+, username
+, ...
 }:
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
     ./disk-config.nix
+    ./home-manager/kickstart.nixvim/nixvim.nix
     ./setup
   ];
   boot.loader.grub = {
@@ -40,7 +40,6 @@
     magic-wormhole
     mosh
     ncdu
-    neovim
     nettools
     pinentry
     pinentry-curses
@@ -57,27 +56,13 @@
     zoxide
 
     # Development tools
-    basedpyright
-    clang-tools
-    cmake-language-server
     delta
     difftastic
     doxygen
-    fish-lsp
-    gitlint
-    isort
     lazygit
     lua
-    lua-language-server
-    nil
-    nodePackages.jsonlint
-    pyright
     python3
-    ruff
     rustup
-    stylua
-    typos
-    typos-lsp
     uv
   ];
 
