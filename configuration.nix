@@ -195,7 +195,7 @@
     };
   };
 
-  # HACK: invesitgate and remove
+  # HACK: Failing on Josie's AX102. Investigate and remove when fixed...
   systemd.network.wait-online.enable = false;
 
   users.users.${username} = {
