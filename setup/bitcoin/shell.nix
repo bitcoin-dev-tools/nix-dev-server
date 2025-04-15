@@ -1,6 +1,7 @@
 let
   pkgs = import <nixpkgs> { system = "x86_64-linux"; };
   binDirs = [ "./build/bin" "./build/bin/qt" ];
+  lib = pkgs.lib;
 in
 pkgs.mkShell {
   nativeBuildInputs = with pkgs; [
@@ -49,12 +50,11 @@ pkgs.mkShell {
     linuxPackages.bpftrace
 
     # Bitcoin-qt
-    qt5.qtbase
-    qt5.qttools
+    qt6.qtbase
+    qt6.qttools
   ];
 
-  # Fixes xcb plugin error when trying to launch bitcoin-qt
-  QT_QPA_PLATFORM_PLUGIN_PATH = "${pkgs.qt5.qtbase.bin}/lib/qt-${pkgs.qt5.qtbase.version}/plugins/platforms";
+  LD_LIBRARY_PATH = lib.makeLibraryPath [ pkgs.stdenv.cc.cc pkgs.capnproto ];
 
   shellHook = ''
     BCC_EGG=${pkgs.linuxPackages.bcc}/${pkgs.python3.sitePackages}/bcc-${pkgs.linuxPackages.bcc.version}-py3.${pkgs.python3.sourceVersion.minor}.egg
