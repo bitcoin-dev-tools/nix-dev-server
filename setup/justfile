@@ -7,9 +7,6 @@ setup source-dir:
     if [ ! -d "{{source-dir}}" ]; then echo "Error: Bitcoin Core source directory {{source-dir}} does not exist" exit 1; fi
     cp ./env/.envrc bitcoin/shell.nix bitcoin/justfile {{source-dir}}
 
-    chown $USER:users {{source-dir}}/shell.nix
-    chown $USER:users {{source-dir}}/justfile
-
     echo ".envrc"  >> {{source-dir}}/.gitignore
     echo "flake.nix"  >> {{source-dir}}/.gitignore
     echo "justfile"  >> {{source-dir}}/.gitignore
