@@ -195,6 +195,9 @@
     };
   };
 
+  # HACK: invesitgate and remove
+  systemd.network.wait-online.enable = false;
+
   users.users.${username} = {
     isNormalUser = true;
     extraGroups = [ "networkmanager" "docker" "wheel" ];
