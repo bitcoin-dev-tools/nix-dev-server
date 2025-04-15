@@ -81,6 +81,21 @@
     uv
   ];
 
+  fonts = {
+    packages = with pkgs; [
+      dejavu_fonts
+      font-awesome
+      nerd-fonts.jetbrains-mono
+      noto-fonts
+      noto-fonts-emoji
+    ];
+    fontconfig.defaultFonts = {
+      monospace = [ "JetBrainsMono Nerd Font" ];
+      sansSerif = [ "DejaVu Sans" ];
+      serif = [ "DejaVu Serif" ];
+    };
+  };
+
   programs.bash.shellAliases = {
     l = "eza -alh";
     ll = "eza -l";
