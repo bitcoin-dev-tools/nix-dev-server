@@ -33,7 +33,6 @@
     gh
     git
     gnupg
-    home-manager
     htop
     jq
     just
@@ -236,8 +235,6 @@
         };
       };
     };
-
-    i2pd.enable = true;
   };
 
   virtualisation = {
