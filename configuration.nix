@@ -81,6 +81,12 @@
     uv
   ];
 
+  programs.bash.shellAliases = {
+    l = "eza -alh";
+    ll = "eza -l";
+    ls = "eza";
+  };
+
   programs.git = {
     enable = true;
     package = pkgs.git;
