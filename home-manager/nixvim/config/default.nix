@@ -2,7 +2,6 @@
   imports = [
     ./conform.nix
     ./gitsigns.nix
-    ./indent-blankline.nix
     ./lsp.nix
     ./lualine.nix
     ./number-toggle.nix
