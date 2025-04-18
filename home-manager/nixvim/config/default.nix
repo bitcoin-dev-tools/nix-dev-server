@@ -25,8 +25,22 @@
   # If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
   colorschemes = {
     # https://nix-community.github.io/nixvim/colorschemes/tokyonight/index.html
+    catppuccin = {
+      enable = false;
+      settings = {
+        flavour = "frappe";
+        integrations = {
+          cmp = true;
+          gitsigns = true;
+          treesitter = true;
+        };
+      };
+    };
     gruvbox = {
-      enable = true;
+      enable = false;
+    };
+    tokyonight = {
+      enable = false;
     };
   };
 
@@ -38,7 +52,7 @@
     maplocalleader = " ";
 
     # Set to true if you have a Nerd Font installed and selected in the terminal
-    have_nerd_font = false;
+    have_nerd_font = true;
   };
 
   #  See `:help 'clipboard'`
@@ -243,17 +257,25 @@
   };
 
   extraPackages = with pkgs; [
+    # These are for snacks primarily
     ripgrep
     fd
   ];
 
   # https://nix-community.github.io/nixvim/NeovimOptions/index.html?highlight=extraplugins#extraplugins
   extraPlugins = with pkgs.vimPlugins; [
+    gruvbox-material
     snacks-nvim
   ];
 
   # https://nix-community.github.io/nixvim/NeovimOptions/index.html?highlight=extraplugins#extraconfiglua
   extraConfigLua = ''
+    vim.g.gruvbox_material_background = "medium"
+    vim.g.gruvbox_material_diagnostic_virtual_text = "colored"
+    vim.g.gruvbox_material_better_performance = 1
+    vim.cmd.colorscheme('gruvbox-material')
+
+    -- snacks
     require('snacks').setup({
       bigfile = { enabled = true },
       dim = { enabled = true },
