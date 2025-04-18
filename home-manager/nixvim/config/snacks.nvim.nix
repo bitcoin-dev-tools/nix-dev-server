@@ -1,6 +1,6 @@
 {
   plugins.snacks = {
-    enable = true;
+    enable = false;
     settings = {
       bigfile = { enabled = true; };
       dim = { enabled = true; };
