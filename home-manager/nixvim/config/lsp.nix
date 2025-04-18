@@ -40,13 +40,19 @@
     #  - settings: Override the default settings passed when initializing the server.
     #        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
     servers = {
+      basedpyright = {
+        enable = true;
+      };
       clangd = {
         enable = true;
       };
-      gopls = {
+      cmake = {
         enable = true;
       };
-      basedpyright = {
+      fish_lsp = {
+        enable = true;
+      };
+      gopls = {
         enable = true;
       };
       lua_ls = {
@@ -57,9 +63,18 @@
           };
         };
       };
+      nil_ls = {
+        enable = true;
+      };
       ruff = {
         enable = true;
       };
+      # typos_lsp = {
+      #   enable = true;
+      #   settings = {
+      #     diagnosticSeverity = "Hint";
+      #   };
+      # };
     };
 
     keymaps = { };

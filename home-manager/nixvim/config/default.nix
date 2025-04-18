@@ -337,32 +337,18 @@
     vim.keymap.set('n', '<leader>ss', function() require('snacks').picker.lsp_symbols() end, { desc = 'LSP Symbols' })
     vim.keymap.set('n', '<leader>sS', function() require('snacks').picker.lsp_workspace_symbols() end, { desc = 'LSP Workspace Symbols' })
 
-    -- Autocommand for initialization
-    vim.api.nvim_create_autocmd('User', {
-      pattern = 'VeryLazy',
-      callback = function()
-        -- Setup globals for debugging
-        _G.dd = function(...)
-          require('snacks').debug.inspect(...)
-        end
-        _G.bt = function()
-          require('snacks').debug.backtrace()
-        end
-        vim.print = _G.dd -- Override print to use snacks for `:=` command
+    -- Toggle keymaps
+    require('snacks').toggle.option('spell', { name = 'Spelling' }):map('<leader>us')
+    require('snacks').toggle.option('wrap', { name = 'Wrap' }):map('<leader>uw')
+    require('snacks').toggle.option('relativenumber', { name = 'Relative Number' }):map('<leader>uL')
+    require('snacks').toggle.diagnostics():map('<leader>ud')
+    require('snacks').toggle.line_number():map('<leader>ul')
+    require('snacks').toggle.option('conceallevel', { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map('<leader>uc')
+    require('snacks').toggle.treesitter():map('<leader>uT')
+    require('snacks').toggle.option('background', { off = 'light', on = 'dark', name = 'Dark Background' }):map('<leader>ub')
+    require('snacks').toggle.inlay_hints():map('<leader>uh')
+    require('snacks').toggle.indent():map('<leader>ug')
+    require('snacks').toggle.dim():map('<leader>uD')
 
-        -- Create toggle mappings
-        require('snacks').toggle.option('spell', { name = 'Spelling' }):map('<leader>us')
-        require('snacks').toggle.option('wrap', { name = 'Wrap' }):map('<leader>uw')
-        require('snacks').toggle.option('relativenumber', { name = 'Relative Number' }):map('<leader>uL')
-        require('snacks').toggle.diagnostics():map('<leader>ud')
-        require('snacks').toggle.line_number():map('<leader>ul')
-        require('snacks').toggle.option('conceallevel', { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map('<leader>uc')
-        require('snacks').toggle.treesitter():map('<leader>uT')
-        require('snacks').toggle.option('background', { off = 'light', on = 'dark', name = 'Dark Background' }):map('<leader>ub')
-        require('snacks').toggle.inlay_hints():map('<leader>uh')
-        require('snacks').toggle.indent():map('<leader>ug')
-        require('snacks').toggle.dim():map('<leader>uD')
-      end,
-    })
   '';
 }
