@@ -3,7 +3,7 @@
   home.stateVersion = "25.05";
 
   imports = [
-    ./kickstart.nixvim/nixvim.nix
+    ./nixvim/flake.nix
   ];
 
   home.packages = with pkgs; [
