@@ -1,3 +1,5 @@
+nixos_rebuild_args := if arch() != "x86_64" { "" } else { "--build-on-remote" }
+
 [private]
 default:
     just --list
@@ -5,7 +7,7 @@ default:
 # Deploy
 [group('deploy')]
 deploy hostname:
-    nix-shell -p nixos-anywhere --run "nixos-anywhere --flake .#nixos {{hostname}}"
+    nix-shell -p nixos-anywhere --run "nixos-anywhere --flake .#nixos {{hostname}} {{nixos_rebuild_args}}"
 
 # Update configuration remotely
 [group('rebuild')]
