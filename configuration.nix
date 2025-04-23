@@ -97,6 +97,15 @@
     };
   };
 
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+    enableExtraSocket = false;
+    enableBrowserSocket = false;
+  };
+
+  programs.ssh.startAgent = false;
+
   programs.direnv = {
     enable = true;
     package = pkgs.direnv;
@@ -213,8 +222,10 @@
     openssh = {
       enable = true;
       settings = {
+        AllowAgentForwarding = true;
         PasswordAuthentication = false;
-        PermitRootLogin = "yes";
+        PermitRootLogin = "no";
+        StreamLocalBindUnlink = true;
       };
     };
 

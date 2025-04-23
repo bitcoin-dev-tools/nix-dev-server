@@ -14,6 +14,11 @@
     enable = true;
     userName = "josibake";
     userEmail = "josibake@protonmail.com";
+
+    signing = {
+      key = "8ADCB558C4F33D65";
+      signByDefault = true;
+    };
   };
 
   systemd.user.tmpfiles.rules = [
