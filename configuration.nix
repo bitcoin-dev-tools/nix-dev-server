@@ -185,7 +185,7 @@
   };
 
   networking = {
-    hostName = "nixos";
+    hostName = "2140";
     networkmanager.enable = true;
     firewall = {
       enable = true;
