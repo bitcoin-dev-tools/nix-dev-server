@@ -133,8 +133,10 @@ sudo launchctl start org.nixos.nix-daemon
 
    ```bash
    just deploy <hostname>
-   # or
+   # or on an x64 arch:
    nix-shell -p nixos-anywhere --run "nixos-anywhere --flake .#nixos <hostname>"
+   # or on another arch:
+   nix-shell -p nixos-anywhere --run "nixos-anywhere --flake .#nixos <hostname> --build-on-remote"
    ```
 
 6. Updating a deployed system
