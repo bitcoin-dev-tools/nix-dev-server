@@ -10,6 +10,12 @@
     tokei
   ];
 
+  programs.git = {
+    enable = true;
+    userName = "josibake";
+    userEmail = "josibake@protonmail.com";
+  };
+
   systemd.user.tmpfiles.rules = [
     "d /home/${username}/flakes/bitcoin - ${username} users - -"
     "C /home/${username}/flakes/bitcoin/flake.nix 0744 ${username} users - ${./bitcoin/flake.nix}"
