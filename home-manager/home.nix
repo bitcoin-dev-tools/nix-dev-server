@@ -19,6 +19,14 @@
       key = "8ADCB558C4F33D65";
       signByDefault = true;
     };
+    ignores = [
+      ".envrc"
+      ".direnv/"
+      # temporary hack - i copy justfiles into projects that
+      # dont/wont upstream the justfile, so its easier to just
+      # ignore it globally for now
+      "justfile"
+    ];
   };
 
   systemd.user.tmpfiles.rules = [
