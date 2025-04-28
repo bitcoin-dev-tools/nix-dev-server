@@ -104,8 +104,6 @@
     enableBrowserSocket = false;
   };
 
-  programs.ssh.startAgent = false;
-
   programs.direnv = {
     enable = true;
     package = pkgs.direnv;
