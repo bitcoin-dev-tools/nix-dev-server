@@ -220,7 +220,11 @@
     # seems odd to configure nix-bitcoin in the flake, but then
     # activate it here as a service - not sure what the best practices
     # are on this but this works for now.
-    bitcoind.enable = true;
+    bitcoind = {
+      enable = true;
+      dbCache = 16384;
+      txindex = true;
+    };
     openssh = {
       enable = true;
       settings = {
