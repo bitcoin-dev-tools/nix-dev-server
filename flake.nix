@@ -13,9 +13,13 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-bitcoin = {
+      url = "github:fort-nix/nix-bitcoin/release";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, disko, nixvim, home-manager, ... }:
+  outputs = { nixpkgs, disko, nixvim, home-manager, nix-bitcoin, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -38,6 +42,15 @@
                 ./home-manager/home.nix
               ];
             };
+          }
+          # nix-bitcoin is pulled in as a module and and the configurations
+          # are set here, but the actual service is activated in ./configuration.nix?
+          # unsure what the standard is but for now configuring the packages
+          # in the flake and then activating them in config.nix seems fine
+          nix-bitcoin.nixosModules.default
+          {
+            nix-bitcoin.operator = { enable = true; name = vars.username; };
+            nix-bitcoin.generateSecrets = true;
           }
           ./configuration.nix
           {

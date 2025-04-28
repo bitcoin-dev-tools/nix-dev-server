@@ -217,6 +217,10 @@
   security.sudo.wheelNeedsPassword = false;
 
   services = {
+    # seems odd to configure nix-bitcoin in the flake, but then
+    # activate it here as a service - not sure what the best practices
+    # are on this but this works for now.
+    bitcoind.enable = true;
     openssh = {
       enable = true;
       settings = {
