@@ -14,7 +14,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-bitcoin = {
-      url = "github:fort-nix/nix-bitcoin/release";
+      url = "github:2140-dev/nix-bitcoin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
