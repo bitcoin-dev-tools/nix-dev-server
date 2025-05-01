@@ -224,6 +224,17 @@
       enable = true;
       dbCache = 16384;
       txindex = true;
+
+      # override bitcoind from fort-nix with a custom branch of core
+      package = pkgs.bitcoind.overrideAttrs (old: {
+        version = "29.99.0-g57ce4f980f44";
+        src = pkgs.fetchFromGitHub {
+          owner = "Eunovo";
+          repo = "bitcoin";
+          rev = "57ce4f980f4437727606b9feb1896fa879add880"; # 2025-implement-bip352-full branch
+          sha256 = "sha256-dyzy7TaNLkvU0ZFHwF5GYS1KfAxmTbor85snZC04wB0";
+        };
+      });
     };
     openssh = {
       enable = true;
