@@ -22,6 +22,7 @@
     ignores = [
       ".envrc"
       ".direnv/"
+      ".cache/"
       # temporary hack - i copy justfiles into projects that
       # dont/wont upstream the justfile, so its easier to just
       # ignore it globally for now
