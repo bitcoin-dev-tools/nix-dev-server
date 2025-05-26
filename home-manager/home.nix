@@ -1,14 +1,44 @@
-{ pkgs, username, ... }:
 {
+  pkgs,
+  username,
+  ...
+}: {
   home.stateVersion = "25.05";
-
-  imports = [
-    ./kickstart.nixvim/nixvim.nix
-  ];
-
   home.packages = with pkgs; [
     tokei
   ];
+
+  programs.nvf = {
+    enable = true;
+
+    # my most commonly used languages
+    settings.vim = {
+      statusline.lualine.enable = true;
+      telescope.enable = true;
+      autocomplete.nvim-cmp.enable = true;
+      theme = {
+        enable = true;
+        name = "gruvbox";
+        style = "dark";
+      };
+      lsp = {
+        enable = true;
+        formatOnSave = true;
+      };
+      languages = {
+        enableTreesitter = true;
+
+        # most commonly used
+        clang.enable = true;
+        nix.enable = true;
+        rust.enable = true;
+
+        # less frequently used
+        python.enable = true;
+        sql.enable = true;
+      };
+    };
+  };
 
   programs.git = {
     enable = true;
