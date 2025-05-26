@@ -224,15 +224,18 @@
       enable = true;
       dbCache = 16384;
       txindex = true;
+      addresstype = "silent-payments";
 
       # override bitcoind from fort-nix with a custom branch of core
+      # reminder: "g" is prefixed to the commit id when building from github,
+      # .i.e, use g<commit from your local build> when setting the version
       package = pkgs.bitcoind.overrideAttrs (old: {
-        version = "29.99.0-g57ce4f980f44";
+        version = "29.99.0-g825c5b7c45a8";
         src = pkgs.fetchFromGitHub {
           owner = "Eunovo";
           repo = "bitcoin";
-          rev = "57ce4f980f4437727606b9feb1896fa879add880"; # 2025-implement-bip352-full branch
-          sha256 = "sha256-dyzy7TaNLkvU0ZFHwF5GYS1KfAxmTbor85snZC04wB0";
+          rev = "825c5b7c45a82e7dc0baa851e592630e0d61edd6"; # 2025-implement-bip352-full branch
+          sha256 = "sha256-xyRXAQRUbkRi9WSNAeEsQDoAvTrKNB+bDn+XrSQES7Y";
         };
       });
     };
