@@ -34,7 +34,10 @@
         rust.enable = true;
 
         # less frequently used
-        python.enable = true;
+        # TODO: find a way to turn off type checking with basedpyright
+        # without this, the lsp is unusable with the bitcoin core functional
+        # test framework due to all of the unknown type errors
+        # python.enable = true;
         sql.enable = true;
       };
     };
