@@ -2,6 +2,7 @@
 , pkgs
 , sshKey
 , username
+, lib
 , ...
 }:
 {
@@ -83,6 +84,7 @@
     l = "eza -alh";
     ll = "eza -l";
     ls = "eza";
+    bc = "bitcoin-cli -named";
   };
 
   programs.git = {
@@ -225,18 +227,30 @@
       dbCache = 16384;
       txindex = true;
       addresstype = "silent-payments";
+      extraConfig = ''
+        debug=all
+      '';
 
       # override bitcoind from fort-nix with a custom branch of core
       # reminder: "g" is prefixed to the commit id when building from github,
       # .i.e, use g<commit from your local build> when setting the version
+      # NOTE: always update the hash value as this is what triggers nix to
+      # re-evaluate this section
       package = pkgs.bitcoind.overrideAttrs (old: {
-        version = "29.99.0-g825c5b7c45a8";
+        version = "29.99.0-g0233926668b0";
         src = pkgs.fetchFromGitHub {
           owner = "Eunovo";
           repo = "bitcoin";
-          rev = "825c5b7c45a82e7dc0baa851e592630e0d61edd6"; # 2025-implement-bip352-full branch
-          sha256 = "sha256-xyRXAQRUbkRi9WSNAeEsQDoAvTrKNB+bDn+XrSQES7Y";
+          rev = "0233926668b0a96f37bddc23e309cd971f0e578e"; # 2025-implement-bip352-full branch
+          sha256 = "sha256-qIwjQOoiYrya+TFT0z7yvSi0xQGXAva4FBOklFK61Ak";
         };
+        # override to build with multiprocess - this means we also need to add capnp
+        # as an input
+        buildInputs = old.buildInputs ++ [pkgs.capnproto];
+        cmakeFlags = old.cmakeFlags ++ [
+          (lib.cmakeBool "ENABLE_IPC" true)
+          ("-DCMAKE_BUILD_TYPE=Debug")
+        ];
       });
     };
     openssh = {

@@ -23,7 +23,8 @@
       };
       lsp = {
         enable = true;
-        formatOnSave = true;
+        # cant turn this on because of bitcoin core
+        # formatOnSave = true;
       };
       languages = {
         enableTreesitter = true;
@@ -61,6 +62,10 @@
       # ignore it globally for now
       "justfile"
     ];
+    aliases = {
+      pr = "!f() { git fetch upstream pull/$1/head:pr-$1 && git switch pr-$1; }; f";
+      pru = "!f() { git fetch -f upstream pull/$1/head:pr-$1; }; f";
+    };
   };
 
   systemd.user.tmpfiles.rules = [
