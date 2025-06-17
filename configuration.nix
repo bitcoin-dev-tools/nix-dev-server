@@ -224,11 +224,10 @@
     # are on this but this works for now.
     bitcoind = {
       enable = true;
-      dbCache = 16384;
-      txindex = true;
-      addresstype = "silent-payments";
+      dbCache = 32000;
+      assumevalid = "00000000000000000002a0b5db2a7f8d9087464c2586b546be7bce8eb53b8187"; # 850_000
       extraConfig = ''
-        debug=all
+        par=32
       '';
 
       # override bitcoind from fort-nix with a custom branch of core
@@ -237,20 +236,16 @@
       # NOTE: always update the hash value as this is what triggers nix to
       # re-evaluate this section
       package = pkgs.bitcoind.overrideAttrs (old: {
-        version = "29.99.0-g0233926668b0";
+        version = "29.99.0-g1be688f575151";
         src = pkgs.fetchFromGitHub {
-          owner = "Eunovo";
+          owner = "bitcoin";
           repo = "bitcoin";
-          rev = "0233926668b0a96f37bddc23e309cd971f0e578e"; # 2025-implement-bip352-full branch
-          sha256 = "sha256-qIwjQOoiYrya+TFT0z7yvSi0xQGXAva4FBOklFK61Ak";
+          rev = "1be688f575151109816fa8956d54a5b5220e3b00"; # master
+          sha256 = "sha256-HYstHm+EPRizRFHg/Vb9JTA4QSSlXxRADcpQMH++rvk";
         };
         # override to build with multiprocess - this means we also need to add capnp
         # as an input
-        buildInputs = old.buildInputs ++ [pkgs.capnproto];
-        cmakeFlags = old.cmakeFlags ++ [
-          (lib.cmakeBool "ENABLE_IPC" true)
-          ("-DCMAKE_BUILD_TYPE=Debug")
-        ];
+        buildInputs = old.buildInputs ++ [ pkgs.capnproto ];
       });
     };
     openssh = {

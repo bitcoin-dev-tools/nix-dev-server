@@ -14,12 +14,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-bitcoin = {
-      url = "github:2140-dev/nix-bitcoin/master";
+      url = "github:fort-nix/nix-bitcoin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { nixpkgs, disko, nvf, home-manager, nix-bitcoin, ... }:
+  outputs =
+    { nixpkgs
+    , disko
+    , nvf
+    , home-manager
+    , nix-bitcoin
+    , ...
+    }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -35,7 +42,9 @@
             home-manager.backupFileExtension = "backup";
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit pkgs; username = vars.username; };
+            home-manager.extraSpecialArgs = {
+              username = vars.username;
+            };
             home-manager.users.${vars.username} = {
               imports = [
                 nvf.homeManagerModules.default
@@ -49,7 +58,10 @@
           # in the flake and then activating them in config.nix seems fine
           nix-bitcoin.nixosModules.default
           {
-            nix-bitcoin.operator = { enable = true; name = vars.username; };
+            nix-bitcoin.operator = {
+              enable = true;
+              name = vars.username;
+            };
             nix-bitcoin.generateSecrets = true;
           }
           ./configuration.nix
