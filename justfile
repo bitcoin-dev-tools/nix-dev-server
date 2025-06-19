@@ -5,14 +5,14 @@ default:
 # Deploy
 [group('deploy')]
 deploy hostname:
-    nix-shell -p nixos-anywhere --run "nixos-anywhere --flake .#nixos {{hostname}}"
+    nix-shell -p nixos-anywhere --run "nixos-anywhere --flake .#2140 {{hostname}}"
 
 # Update configuration remotely
 [group('rebuild')]
 switch-remote hostname:
-    nix-shell -p nixos-rebuild --run "nixos-rebuild switch --flake .#nixos --target-host {{hostname}}"
+    nix-shell -p nixos-rebuild --run "nixos-rebuild switch --flake .#2140 --target-host {{hostname}}"
 
 # Update configuration locally
 [group('rebuild')]
 switch:
-    sudo nix-shell -p nixos-rebuild --run "nixos-rebuild switch --flake .#nixos"
+    sudo nix-shell -p nixos-rebuild --run "nixos-rebuild switch --flake .#2140"
