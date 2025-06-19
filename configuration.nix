@@ -2,14 +2,13 @@
 , pkgs
 , sshKey
 , username
-, lib
 , ...
 }:
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
-    ./disk-configs/ax102-disk-config.nix
+    ./disk-config.nix
   ];
   boot.loader.grub = {
     # no need to set devices, disko will add all devices that have a EF02 partition to the list already
@@ -84,7 +83,6 @@
     l = "eza -alh";
     ll = "eza -l";
     ls = "eza";
-    bc = "bitcoin-cli -named";
   };
 
   programs.git = {
@@ -97,13 +95,6 @@
       core.editor = "${pkgs.neovim}/bin/nvim";
       gpg.program = "${pkgs.gnupg}/bin/gpg2";
     };
-  };
-
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-    enableExtraSocket = false;
-    enableBrowserSocket = false;
   };
 
   programs.direnv = {
@@ -194,7 +185,7 @@
   };
 
   networking = {
-    hostName = "2140";
+    hostName = "nixos";
     networkmanager.enable = true;
     firewall = {
       enable = true;
@@ -219,42 +210,11 @@
   security.sudo.wheelNeedsPassword = false;
 
   services = {
-    # seems odd to configure nix-bitcoin in the flake, but then
-    # activate it here as a service - not sure what the best practices
-    # are on this but this works for now.
-    bitcoind = {
-      enable = true;
-      dbCache = 32000;
-      assumevalid = "00000000000000000002a0b5db2a7f8d9087464c2586b546be7bce8eb53b8187"; # 850_000
-      extraConfig = ''
-        par=32
-      '';
-
-      # override bitcoind from fort-nix with a custom branch of core
-      # reminder: "g" is prefixed to the commit id when building from github,
-      # .i.e, use g<commit from your local build> when setting the version
-      # NOTE: always update the hash value as this is what triggers nix to
-      # re-evaluate this section
-      package = pkgs.bitcoind.overrideAttrs (old: {
-        version = "29.99.0-g1be688f575151";
-        src = pkgs.fetchFromGitHub {
-          owner = "bitcoin";
-          repo = "bitcoin";
-          rev = "1be688f575151109816fa8956d54a5b5220e3b00"; # master
-          sha256 = "sha256-HYstHm+EPRizRFHg/Vb9JTA4QSSlXxRADcpQMH++rvk";
-        };
-        # override to build with multiprocess - this means we also need to add capnp
-        # as an input
-        buildInputs = old.buildInputs ++ [ pkgs.capnproto ];
-      });
-    };
     openssh = {
       enable = true;
       settings = {
-        AllowAgentForwarding = true;
         PasswordAuthentication = false;
-        PermitRootLogin = "no";
-        StreamLocalBindUnlink = true;
+        PermitRootLogin = "yes";
       };
     };
 
